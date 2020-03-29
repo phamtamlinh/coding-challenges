@@ -23,10 +23,15 @@ const SinglyLinkedList = class {
   }
 };
 
-const arr = [5,2,6,3,6,7];
+function printSinglyLinkedList(node) {
+  while (node != null) {
+    console.log(String(node.data));
+    node = node.next;
+  }
+}
 
-const llist = new SinglyLinkedList();
-
-arr.forEach(a => llist.insertNode(a));
-
-console.log(llist);
+module.exports = {
+  SinglyLinkedList,
+  SinglyLinkedListNode,
+  printSinglyLinkedList
+};
