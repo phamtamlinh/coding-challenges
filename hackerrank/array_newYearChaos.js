@@ -45,17 +45,15 @@
 // Too chaotic
 
 function minimumBribes(q) {
-  q.unshift(0);
   let result = 0;
-  for (let i = 1; i < q.length; i++) {
-    let difference = q[i] - i;
-    if (difference > 2) {
+  for (let i = q.length-1; i >= 0; i--) {
+    if (q[i] - (i+1) > 2) {
       return 'Too chaotic';
-    } else if (difference > 0) {
-      result += difference; 
-    } else if (difference == 0) {
-      if (q[i] - q[i-1] < 1) {
-        result++;
+    } else {
+      for (let j = Math.max(0, q[i]-2); j < i; j++) {
+        if(q[j] > q[i]) {
+          result++;
+        }
       }
     }
   }
