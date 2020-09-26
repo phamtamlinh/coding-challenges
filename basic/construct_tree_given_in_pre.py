@@ -28,7 +28,7 @@ def buildTree(inOrder, preOrder): # FC CF
 
   return node
 
-def printInorder(node): 
+def printInorder(node):
   if node is None: 
     return 
   # first recur on left child 
