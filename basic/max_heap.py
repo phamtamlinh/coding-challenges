@@ -15,8 +15,8 @@ class MaxHeap:
 
     if len(self.heap) > 0:
       currentIndex = len(self.heap) - 1
-      while currentIndex > 0 and self.heap[math.floor(currentIndex/2)] < self.heap[currentIndex]:
-        parentIndex = math.floor(currentIndex/2)
+      while currentIndex > 0 and self.heap[math.floor((currentIndex-1)/2)] < self.heap[currentIndex]:
+        parentIndex = math.floor((currentIndex-1)/2)
         self.heap[parentIndex], self.heap[currentIndex] = self.heap[currentIndex], self.heap[parentIndex]
         currentIndex = parentIndex
 
