@@ -6,10 +6,10 @@ class MinHeap:
   
   def getMin(self):
     return self.heap[0]
-  
+
   def getHeap(self):
     return self.heap
-  
+
   def insert(self, node):
     self.heap.append(node)
 
@@ -54,10 +54,10 @@ arr = [2, 5, 7, 8, 10, 9]
 for a in arr:
   minHeap.insert(a)
 
-print(minHeap.getHeap())
-print(minHeap.extractMin())
-print(minHeap.getHeap())
-print(minHeap.extractMin())
-print(minHeap.getHeap())
-print(minHeap.extractMin())
-print(minHeap.getHeap())
+# print(minHeap.getHeap())
+# print(minHeap.extractMin())
+# print(minHeap.getHeap())
+# print(minHeap.extractMin())
+# print(minHeap.getHeap())
+# print(minHeap.extractMin())
+# print(minHeap.getHeap())
