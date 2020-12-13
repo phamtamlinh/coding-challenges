@@ -2,7 +2,7 @@ class SinglyLinkedListNode:
   def __init__(self, data):
     self.data = data
     self.next = None
-  
+
 class SinglyLinkedList:
   def __init__(self):
     self.head = None
@@ -10,32 +10,34 @@ class SinglyLinkedList:
   
   def insertNode(self, data):
     node = SinglyLinkedListNode(data)
-    if self.head == None:
+    if self.head is None:
       self.head = node
     else:
       self.tail.next = node
-
+    
     self.tail = node
-  def printList(self):
-    node = self.head
+  
+  def printList(self, node):
     result = ''
     while(node):
       result += str(node.data) + ' '
       node = node.next
     print(result)
+  
   def reverse(self):
-    currNode = self.head
-    nextNode, prevNode = None, None
-    while(currNode):
-      nextNode = currNode.next
-      currNode.next = prevNode
-      prevNode = currNode
-      currNode = nextNode
-    self.head = prevNode
+    current = self.head
+    prev, next = None, None
+    while current:
+      next = current.next
+      current.next = prev
+      prev = current
+      current = next
+    self.head = prev
 
 arr = [1, 2, 32, 4]
 llist = SinglyLinkedList()
 for a in arr:
   llist.insertNode(a)
+
 llist.reverse()
-llist.printList()
+llist.printList(llist.head)

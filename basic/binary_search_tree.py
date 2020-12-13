@@ -37,23 +37,20 @@ class BinarySearchTree:
       return self.search(node.left, data)
   
   def searchAndReturnParentNode(self, node, data):
-    if node is None:
-      return node, None
-    elif node.left == data:
-      return node, node.left
-    elif node.right == data:
-      return node, node.right
-
-    if node.data < data:
-      return self.search(node.right, data)
-    else:
-      return self.search(node.left, data)
+    parent = None
+    while node and node.data != data:
+      parent = node
+      if data < node.data:
+        node = node.left
+      else:
+        node = node.right
+    return parent, node
   
   def getInorderSuccessor(self, node):
     if node.left and node.left.left is None:
       return node, node.left
     else:
-      return self.getInorderSuccessor(node.left)
+      self.getInorderSuccessor(node.left)
 
   def delete(self, data):
     if self.root is None:
@@ -61,17 +58,31 @@ class BinarySearchTree:
     
     parentNode, node = self.searchAndReturnParentNode(self.root, data)
 
-    if node.left is None:
-      parentNode.right = node.right
-      node = None
-    elif node.right is None:
-      parentNode.left = node.left
-      node = None
-    else:
+    if node.left is None and node.right is None:
+      if node != self.root:
+        if parentNode.left == node:
+          parentNode.left = None
+        else:
+          parentNode.right = None
+      else:
+        self.root = None
+    elif node.left and node.right:
       parentNodeSuccessor, nodeSuccessor = self.getInorderSuccessor(node.right)
       node.data = nodeSuccessor.data
       parentNodeSuccessor.left = None
-
+    else:
+      child = None
+      if node.left:
+        child = node.left
+      else:
+        child = node.right
+      if node != self.root:
+        if parentNode.left == node:
+          parentNode.left = child
+        else:
+          parentNode.right = child
+      else:
+        self.root = child
 
 def printInorder(node):
   if node:
@@ -88,4 +99,13 @@ for i in range(0, len(arr)):
 
 # node = binTree.search(binTree.root, 70)
 binTree.delete(20)
+print("Inorder traversal of the modified tree")
+printInorder(binTree.root)
+
+binTree.delete(30)
+print("Inorder traversal of the modified tree")
+printInorder(binTree.root)
+
+binTree.delete(50)
+print("Inorder traversal of the modified tree")
 printInorder(binTree.root)
