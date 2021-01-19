@@ -1,31 +1,34 @@
-def count(S, m, n):
+# https://www.geeksforgeeks.org/understanding-the-coin-change-problem-with-dynamic-programming/
 
-    # If n is 0 then there is 1
-    # solution (do not include any coin)
-    print("S ", S, "m ", m, "n ", n)
-    if (n == 0):
-        print("solution ", 1)
-        return 1
+def getNumberOfWays(N, Coins): 
+  
+    # Create the ways array to 1 plus the amount 
+    # to stop overflow 
+    ways = [0] * (N + 1)
+  
+    # Set the first way to 1 because its 0 and 
+    # there is 1 way to make 0 with 0 coins 
+    ways[0] = 1
+  
+    # Go through all of the coins 
+    for i in range(len(Coins)): 
+  
+        # Make a comparison to each index value 
+        # of ways with the coin value. 
+        print("Coins[i]", Coins[i])
+        for j in range(len(ways)): 
+            if (Coins[i] <= j):
+                print("j", j, "ways[j]", ways[j])
+                print("ways[(int)(j - Coins[i])]", ways[(int)(j - Coins[i])])
+  
+                # Update the ways array 
+                ways[j] += ways[(int)(j - Coins[i])]
+        print(ways)
+  
+    # return the value at the Nth position 
+    # of the ways array. 
+    return ways[N]
 
-    # If n is less than 0 then no
-    # solution exists
-    if (n < 0):
-        print("solution ", 0)
-        return 0
+Coins = [2, 3, 7]
 
-    # If there are no coins and n
-    # is greater than 0, then no
-    # solution exist
-    if (m <= 0 and n >= 1):
-        print("solution ", 0)
-        return 0
-
-    # count is sum of solutions (i)
-    # including S[m-1] (ii) excluding S[m-1]
-    return count(S, m - 1, n) + count(S, m, n-S[m-1])
-
-
-# {1, 1, 1, 1}, {1, 1, 2}, {2, 2}, {1, 3}
-arr = [1, 2, 3]
-m = len(arr)
-print(count(arr, m, 4))
+print(getNumberOfWays(12, Coins))
