@@ -70,7 +70,7 @@ def parseMap(M, W, H):
             start = index
           elif end < 0:
             end = index
-        if i > 1 and M[i-1][j] == '.':
+        if i > 0 and M[i-1][j] == '.':
           nIndex = j + (i-1)*W
           graph[index].append(nIndex)
           graph[nIndex].append(index)
