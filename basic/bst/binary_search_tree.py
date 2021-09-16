@@ -90,22 +90,62 @@ def printInorder(node):
     print(node.data)
     printInorder(node.right)
 
+def insertNode(root, x):
+  if root == None:
+    root = Node(x)
+  else:
+    if x < root.data:
+      root.left = insertNode(root.left, x)
+    else:
+      root.right = insertNode(root.right, x)
+  return root
+
+def deleteNode(root, x):
+  if root == None:
+    return root
+  if root.data > x:
+    root.left = deleteNode(root.left, x)
+  elif root.data < x:
+    root.right = deleteNode(root.right, x)
+  else:
+    if root.left == None:
+      temp = root.right
+      del root
+      return temp
+    elif root.right == None:
+      temp = root.left
+      del root
+      return temp
+    # node has 2 children
+    temp = minValueNode(root.right)
+    root.data = temp.data
+    root.right = deleteNode(root.right, temp.data)
+  return root
+
+def minValueNode(node):
+  current = node
+  while current.left != None:
+    current = current.left
+  return current
 
 # arr = [1, 2, 3, 4, 5]
 arr = [50, 30, 20, 40, 70, 60, 80]
-binTree = BinarySearchTree()
+# binTree = BinarySearchTree()
+root = None
 for i in range(0, len(arr)):
-  binTree.insert(arr[i])
+  root = insertNode(root, arr[i])
 
-# node = binTree.search(binTree.root, 70)
-binTree.delete(20)
-print("Inorder traversal of the modified tree")
-printInorder(binTree.root)
+# printInorder(root)
 
-binTree.delete(30)
-print("Inorder traversal of the modified tree")
-printInorder(binTree.root)
+# # node = binTree.search(binTree.root, 70)
+# binTree.delete(20)
+# print("Inorder traversal of the modified tree")
+# printInorder(binTree.root)
 
-binTree.delete(50)
-print("Inorder traversal of the modified tree")
-printInorder(binTree.root)
+# binTree.delete(30)
+# print("Inorder traversal of the modified tree")
+# printInorder(binTree.root)
+
+# binTree.delete(50)
+# print("Inorder traversal of the modified tree")
+# printInorder(binTree.root)
