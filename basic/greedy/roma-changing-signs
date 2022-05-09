@@ -1,0 +1,73 @@
+; Roma works in a company that sells TVs. Now he has to prepare a report for the last year.
+
+; Roma has got a list of the company's incomes. The list is a sequence that consists of nn integers. The total income of the company is the sum of all integers in sequence. Roma decided to perform exactly kk changes of signs of several numbers in the sequence. He can also change the sign of a number one, two or more times.
+
+; The operation of changing a number's sign is the operation of multiplying this number by -1−1.
+
+; Help Roma perform the changes so as to make the total income of the company (the sum of numbers in the resulting sequence) maximum. Note that Roma should perform exactly kk changes.
+
+; Dữ liệu nhập
+; The first line contains two integers nn and kk (1 \le n, k \le 10^51≤n,k≤10
+; ​5
+; ​​ ), showing how many numbers are in the sequence and how many swaps are to be made.
+
+; The second line contains a non-decreasing sequence, consisting of nn integers a_ia
+; ​i
+; ​​  (|{a_i}| \le 10^4)(∣a
+; ​i
+; ​​ ∣≤10
+; ​4
+; ​​ ).
+
+; The numbers in the lines are separated by single spaces. Please note that the given sequence is sorted in non-decreasing order.
+
+; Dữ liệu xuất
+; In the single line print the answer to the problem — the maximum total income that we can obtain after exactly kk changes.
+
+; Ví dụ
+; inputcopy
+; 3 2
+; -1 -1 1
+; outputcopy
+; 3
+; inputcopy
+; 3 1
+; -1 -1 1
+; outputcopy
+; 1
+
+n, k = map(int, input().split())
+incomes = list(map(int, input().split()))
+left_operation = k
+total_income = 0
+index = 0
+
+if k <= n:
+  for i in range(0, k):
+    if incomes[i] < 0:
+      total_income += incomes[i]*(-1)
+      left_operation -= 1
+      index += 1
+    else:
+      break
+else:
+  for i in range(0, n):
+    if incomes[i] < 0:
+      total_income += incomes[i]*(-1)
+      left_operation -= 1
+      index += 1
+    else:
+      break
+
+if left_operation % 2 == 0:
+  for i in range(index, n):
+    total_income += incomes[i]
+else:
+  if index >= n:
+    min_income = abs(incomes[index-1])
+  else:
+    min_income = min(abs(incomes[index-1]), abs(incomes[index]))
+  for i in range(index, n):
+    total_income += incomes[i]
+  total_income -= min_income*2
+print(total_income)
