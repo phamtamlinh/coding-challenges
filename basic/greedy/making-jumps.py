@@ -69,4 +69,68 @@ while True:
   max_reach_cell = DFSRecursion(start[0], start[1])
   unreach_cell = total_cell - max_reach_cell
   print(f"Case {case}, {unreach_cell} square{'s'[:unreach_cell^1]} can not be reached.")
+
+
+# DFS recursion + backtrack
+# this is easier to understand but got TLE
+MAX = 10
+from datetime import datetime
+board = [[False for i in range(MAX)] for i in range(MAX)]
+
+direct = [(-2, -1), (-2, 1), (-1, -2), (-1, 2),
+          (1, -2), (1, 2), (2, -1), (2, 1)]
+
+def getRowCol(r, c):
+  return [[r-2, c-1], [r-2, c+1], [r-1, c-2], [r-1, c+2], [r+1, c-2], [r+1, c+2], [r+2, c-1], [r+2, c+1]]
+
+def canMove(x, y):
+  global board
+  possibleMoves = []
+  for i in range(8):
+    ux = x + direct[i][0]
+    uy = y + direct[i][1]
+    if 0 <= ux < MAX and 0 <= uy < MAX and board[ux][uy]:
+      possibleMoves.append([ux, uy])
+  return possibleMoves
+
+def DFSRecursion(maxCount, count, x, y):
+  global board
+  board[x][y] = False
+  possibleMoves = canMove(x, y)
+  if not len(possibleMoves):
+    return count
+  for v in possibleMoves:
+    count += 1
+    dfsCount = DFSRecursion(maxCount, count, v[0], v[1])
+    maxCount = max(maxCount, dfsCount)
+    board[v[0]][v[1]] = True
+    count -= 1
+  return maxCount
+
+def printBoard(board):
+  for i in range(0, 10):
+    for j in range(0, 10):
+      print(board[i][j], end=' ')
+    print()
+  print("_______________")
+
+case = 0
+while True:
+  n, *inputm = list(map(int, input().split()))
+  if n == 0:
+    break
+  print(datetime.now())
+  case += 1
+  board = [[False for i in range(MAX)] for i in range(MAX)]
+  start = [0, inputm[0]]
+  total_cell = 0
+  for i in range(0, n*2, 2):
+    for j in range(inputm[i], inputm[i]+inputm[i+1]):
+      board[int(i/2)][j] = True
+      total_cell += 1
+  max_reach_cell = DFSRecursion(0, 0, start[0], start[1])
+  unreach_cell = total_cell - 1 - max_reach_cell
+  print(f"Case {case}, {unreach_cell} square{'s'[:unreach_cell^1]} can not be reached.")
+  print(datetime.now())
+  print("------------")
   
